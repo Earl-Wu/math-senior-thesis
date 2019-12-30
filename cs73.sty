@@ -1,0 +1,60 @@
+\usepackage{mathpartir}
+\usepackage{xifthen}
+\usepackage{tikz}
+\usepackage{titlesec}
+
+% Workaround for section numbering bug in titlesec 2.10.1
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+\makeatother
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\newcommand{\hwpart}[1]{%
+  \section{#1}%
+}
+\newcommand{\hwquestion}{%
+  \subsection{}%
+}
+% \titleformat{\section}{\Large\bfseries}{\thesection.}{1em}{}
+% \titleformat{\subsection}{\bfseries}{Question \thesubsection:}{0.5em}{ }
+% \renewcommand{\thesubsection}{\arabic{section}.\alph{subsection}}
+
+\newcommand{\inferenceRule}[3][]{%
+  \ifthenelse{\isempty{#1}}{%
+    \inferrule*[]{#2}{#3}%
+  }{%
+    \inferrule*[left={\sc #1}]{#2}{#3}%
+  }%
+}
+\def\ir{\inferenceRule}
+
+\newsavebox{\zapbox}
+\savebox{\zapbox}{\tikz[scale=0.25]{\draw (0.5,1) -- (0.2,0.5) -- (0.8,0.5) -- (0.5,0);}}
+\newcommand{\zap}{\hspace{1pt}\usebox{\zapbox}\hspace{1pt}}
+
+\newsavebox{\trianglebox}
+\savebox{\trianglebox}{\tikz[scale=0.25]{\draw (0,0) -- (0.5,1) -- (1,0) -- cycle;}}
+\newcommand{\tri}{\hspace{1pt}\usebox{\trianglebox}\hspace{1pt}}
+
+\newsavebox{\squarebox}
+\savebox{\squarebox}{\tikz[scale=0.25]{\draw (0,0) -- (0,1) -- (1,1) -- (1,0) -- cycle;}}
+\newcommand{\sqr}{\hspace{1pt}\usebox{\squarebox}\hspace{1pt}}
+
+\newsavebox{\ringbox}
+\savebox{\ringbox}{\tikz[scale=0.25]{%
+  \draw[fill=black] (0.5,0.5) circle (1pt);
+  \draw (0.5,0.5) circle (0.5);
+}}
+\newcommand{\rng}{\hspace{1pt}\usebox{\ringbox}\hspace{1pt}}
+
+\newcommand{\TODO}{%
+  {\color{purple}\fbox{%
+    {\centering\bfseries TODO}%
+  }}%
+}
+
+\newcommand{\separator}{\vspace*{5mm}}
